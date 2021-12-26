@@ -1,10 +1,11 @@
 export { createProject, createTask };
 
-const createTask = ({ title, description, dueDate, priority }) => ({
+const createTask = (title, description, dueDate, priority) => ({
     title,
     description,
     dueDate,
     priority,
+    completed: false,
 
     setTitle(title) {
         this.title = title;
@@ -36,19 +37,23 @@ const createTask = ({ title, description, dueDate, priority }) => ({
 
     getPriority() {
         return this.priority;
+    },
+
+    setTaskComplete() {
+        this.completed = true;
     }
 });
 
-const createProject = ({ projectName, toDoList }) => ({
+const createProject = (projectName, taskList) => ({
     projectName,
-    toDoList, // array of tasks
+    taskList, // array of tasks
 
     getProjectName() {
         return this.projectName;
     },
 
     getTasks() {
-        return this.toDoList;
+        return this.taskList;
     },
 
     setProjectName(projectName) {
@@ -56,17 +61,17 @@ const createProject = ({ projectName, toDoList }) => ({
     },
 
     addTask(task) {
-        this.toDoList.push(task);
+        this.taskList.push(task);
     },
 
     removeTask(task) {
-        let taskIndex = this.toDoList.indexOf(task);
+        let taskIndex = this.taskList.indexOf(task);
         if (taskIndex > 0) {
-            this.toDoList.splice(taskIndex, 1); //do i need to shift index at all?
+            this.taskList.splice(taskIndex, 1); //do i need to shift index at all?
         }
     },
 
     clearTasks() {
-        this.toDoList = [];
+        this.taskList = [];
     }
 })

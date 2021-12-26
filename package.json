@@ -1,5 +1,14 @@
 {
-  "dependencies": {
-    "date-fns": "^2.27.0"
-  }
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "webpack"
+    },
+    "dependencies": {
+        "date-fns": "^2.27.0",
+        "lodash": "^4.17.21"
+    },
+    "devDependencies": {
+        "webpack": "^5.65.0",
+        "webpack-cli": "^4.9.1"
+    }
 }

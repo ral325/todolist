@@ -1,5 +1,5 @@
-import { createProject, createTask } from "toDoObjects"
-import { compareAsc, format } from "date-fns";
+import { createProject, createTask } from "./toDoObjects"
+//import { compareAsc, format } from "date-fns";
 
 export function makeDefaultProject() {
     let titles = ["task1", "task2", "task3"];
@@ -11,4 +11,6 @@ export function makeDefaultProject() {
     for (let i = 0; i < 3; i++) {
         sampleTaskList.push(createTask(titles[i], descriptions[i], dueDates[i], priorities[i]));
     }
+
+    return createProject("default project", sampleTaskList);
 }
