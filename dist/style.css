@@ -3,8 +3,34 @@
     padding: 0;
 }
 
-.centered {
-    position: fixed;
-    left: 50%;
-    transform: translate(-50%, 0%);
+body {
+    height: 95vh;
+}
+
+#page-header {
+    display: flex;
+    top: 0;
+    width: 100vw;
+    text-align: center;
+    justify-content: center;
+    background-color: grey;
+}
+
+.tab-container {
+    display: flex;
+    width: 20vw;
+    height: 100%;
+    background-color: blanchedalmond;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: flex-start;
+    gap: 0px;
+}
+
+.tab {
+    display: flex;
+    align-self: stretch;
+    border: 1px solid black;
+    box-sizing: border-box;
+    margin: 4px;
 }
