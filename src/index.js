@@ -10,4 +10,4 @@ projectList.push(makeDefaultProject());
 projectList.push(makeDefaultProject());
 
 makePageHeader();
-makeHomePage(projectList);
+makeHomePage(projectList, 0);
