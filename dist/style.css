@@ -66,6 +66,10 @@ body {
     border-radius: 5px;
 }
 
+.check-box:hover {
+    background-color: yellowgreen;
+}
+
 .title {
     display: flex;
     justify-content: flex-start;
