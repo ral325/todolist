@@ -49,6 +49,11 @@ body {
     margin: 2px;
 }
 
+.add-project-button {
+    margin: 2px;
+    width: 98%;
+}
+
 #task-container {
     display: flex;
     width: 100%;

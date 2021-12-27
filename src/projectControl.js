@@ -1,4 +1,5 @@
 import { makeTask, makeTaskHeaders } from "./taskControl";
+import { createProject } from "./toDoObjects";
 
 export function getProjectFromName(projectName, projectList) {
     let projectNames = projectList.map(project => project.getProjectName());
@@ -8,6 +9,8 @@ export function getProjectFromName(projectName, projectList) {
 
 export function makeTabs(projectList) {
     let tabContainer = document.getElementById("tab-container");
+    tabContainer.innerHTML = ""; //clear any existing tabs
+
     for (let i = 0; i < projectList.length; i++) {
         let newTabLine = document.createElement("div"); //will contain actual tab name + delete button
         newTabLine.classList.add("tabline");
@@ -29,6 +32,25 @@ export function makeTabs(projectList) {
     }
 
     // add new tab button
+    let addProjectButton = document.createElement("button");
+    addProjectButton.textContent = "+";
+    addProjectButton.classList.add("add-project-button");
+    addProjectButton.addEventListener("click", () => addProject(projectList));
+    tabContainer.appendChild(addProjectButton);
+
+    // add event listeners to tabs
+    let tabs = [...document.querySelectorAll(".tab")];
+
+    for (let i = 0; i < tabs.length; i++) {
+        tabs[i].addEventListener("click", controlTabs);
+        // when a tab is clicked, identify which project that is from the projectList and display that project's tasks in the taskContainer
+    }
+
+    function controlTabs() {
+        //"this" is the tab class element that was clicked
+        // projectList comes from input to makeHomePage(), so it won't change within a single call to makeHomePage()
+        displayProject(getProjectFromName(this.dataset.projectName, projectList));
+    }
 
     return tabContainer;
 }
@@ -49,7 +71,7 @@ export function displayProject(project) {
     return taskContainer;
 }
 
-export function deleteProject(target, projectList) {
+function deleteProject(target, projectList) {
     // when delete project button is clicked, get project from parent tab
     // then delete the project from projectList and delete the tab
     let thisProject = getProjectFromName(target.parentElement.dataset.projectName, projectList);
@@ -73,5 +95,10 @@ export function deleteProject(target, projectList) {
     } else {
         taskContainer.innerHTML = "";
     }
+}
 
+function addProject(projectList) {
+    let newProject = createProject(window.prompt("Enter project name:"), []);
+    projectList.push(newProject);
+    makeTabs(projectList);
 }
