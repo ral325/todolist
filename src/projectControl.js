@@ -1,5 +1,5 @@
 import { makeTask, makeTaskHeaders } from "./taskControl";
-import { createProject } from "./toDoObjects";
+import { createProject, createTask } from "./toDoObjects";
 
 export function getProjectFromName(projectName, projectList) {
     let projectNames = projectList.map(project => project.getProjectName());
@@ -68,6 +68,13 @@ export function displayProject(project) {
         makeTask(taskList[i], taskContainer, project);
     }
 
+    // add "add task button"
+    let addTaskButton = document.createElement("button");
+    addTaskButton.textContent = "+";
+    addTaskButton.addEventListener("click", () => addNewTask(project));
+    addTaskButton.classList.add("add-task-button")
+    taskContainer.appendChild(addTaskButton);
+
     return taskContainer;
 }
 
@@ -78,8 +85,8 @@ function deleteProject(target, projectList) {
     let projectIndex = projectList.indexOf(thisProject);
     if (projectIndex > -1) {
         projectList.splice(projectIndex, 1);
-        console.log("project " + projectIndex + " deleted")
-        console.log(projectList)
+        //console.log("project " + projectIndex + " deleted")
+        //console.log(projectList)
     }
     target.parentElement.parentElement.removeChild(target.parentElement);
 
@@ -87,11 +94,11 @@ function deleteProject(target, projectList) {
     // if there are no projects, leave taskContainer empty
     let taskContainer = document.getElementById("task-container");
     let currentDisplayedProject = taskContainer.dataset.displayedProject;
-    if (projectList.indexOf(currentDisplayedProject) > -1) {
-        throw new Error("somehow found deleted project?");
-    } else if (projectList.length > 0) {
+
+    // if currently displayed project is the deleted one, display the first project still in the list.
+    // if there are no projects in the list, leave task container empty
+    if (thisProject.getProjectName() == currentDisplayedProject) {
         displayProject(projectList[0]);
-        //console.log(projectList)
     } else {
         taskContainer.innerHTML = "";
     }
@@ -101,4 +108,15 @@ function addProject(projectList) {
     let newProject = createProject(window.prompt("Enter project name:"), []);
     projectList.push(newProject);
     makeTabs(projectList);
+}
+
+function addNewTask(project) {
+    let title = window.prompt("Enter task name:");
+    let descrip = window.prompt("Enter description:");
+    let dueDate = window.prompt("Enter due date:")
+    let priority = window.prompt("Enter priority:")
+
+    project.addTask(createTask(title, descrip, dueDate, priority));
+
+    displayProject(project);
 }

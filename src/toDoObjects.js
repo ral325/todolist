@@ -1,9 +1,9 @@
-import { compareAsc, format } from "date-fns";
+import { compareAsc, format, toDate, parse } from "date-fns";
 
 export const createTask = (title, description, dueDate, priority) => ({
     title,
     description,
-    dueDate,
+    dueDate: parse(dueDate, 'yyyy-MM-dd', new Date()),
     priority,
     completed: false,
     parentProject: null,

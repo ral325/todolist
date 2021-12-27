@@ -54,6 +54,11 @@ body {
     width: 98%;
 }
 
+.add-task-button {
+    margin: 5px;
+    width: 5%;
+}
+
 #task-container {
     display: flex;
     width: 100%;
