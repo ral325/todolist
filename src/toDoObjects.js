@@ -1,6 +1,6 @@
-export { createProject, createTask };
+import { compareAsc, format } from "date-fns";
 
-const createTask = (title, description, dueDate, priority) => ({
+export const createTask = (title, description, dueDate, priority) => ({
     title,
     description,
     dueDate,
@@ -32,7 +32,7 @@ const createTask = (title, description, dueDate, priority) => ({
     },
 
     getDueDate() {
-        return this.dueDate;
+        return format(this.dueDate, "y/M/d");
     },
 
     getPriority() {
@@ -44,7 +44,7 @@ const createTask = (title, description, dueDate, priority) => ({
     }
 });
 
-const createProject = (projectName, taskList) => ({
+export const createProject = (projectName, taskList) => ({
     projectName,
     taskList, // array of tasks
 
