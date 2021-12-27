@@ -27,16 +27,26 @@ body {
     gap: 0px;
 }
 
-.tab {
-    display: flex;
-    align-self: stretch;
+.tabline {
+    display: grid;
+    width: 97%;
+    grid-template-columns: 9fr 1fr;
     border: 1px solid black;
     box-sizing: border-box;
     margin: 4px;
 }
 
-.tab:hover {
+.tabline:hover {
     background-color: whitesmoke;
+}
+
+.tab {
+    margin: 2px;
+}
+
+.project-delete-button {
+    background-color: red;
+    margin: 2px;
 }
 
 #task-container {
