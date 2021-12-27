@@ -1,3 +1,4 @@
+import { parse, isValid } from "date-fns";
 import { makeTask, makeTaskHeaders } from "./taskControl";
 import { createProject, createTask } from "./toDoObjects";
 
@@ -52,6 +53,10 @@ export function makeTabs(projectList) {
         displayProject(getProjectFromName(this.dataset.projectName, projectList));
     }
 
+    if (projectList.length === 1) {
+        displayProject(projectList[0]);
+    }
+
     return tabContainer;
 }
 
@@ -97,10 +102,11 @@ function deleteProject(target, projectList) {
 
     // if currently displayed project is the deleted one, display the first project still in the list.
     // if there are no projects in the list, leave task container empty
-    if (thisProject.getProjectName() == currentDisplayedProject) {
-        displayProject(projectList[0]);
-    } else {
+    if (projectList.length === 0) {
         taskContainer.innerHTML = "";
+        console.log("no projects left")
+    } else if (thisProject.getProjectName() == currentDisplayedProject) {
+        displayProject(projectList[0]);
     }
 }
 
@@ -112,11 +118,21 @@ function addProject(projectList) {
 
 function addNewTask(project) {
     let title = window.prompt("Enter task name:");
-    let descrip = window.prompt("Enter description:");
-    let dueDate = window.prompt("Enter due date:")
+    let descrip = window.prompt("Enter description of task:");
+    let dueDate = promptForValidDate(window.prompt("Enter due date in the format of YYYY-MM-DD:"));
+    // console.log(parse(dueDate, "yyyy-MM-dd", new Date()))
     let priority = window.prompt("Enter priority:")
 
     project.addTask(createTask(title, descrip, dueDate, priority));
 
     displayProject(project);
+}
+
+function promptForValidDate(date) {
+    if (!isValid(parse(date, "yyyy-MM-dd", new Date()))) {
+        let newdate = window.prompt("Please ensure due date is of the form Y YYY-MM-DD:")
+        return promptForValidDate(newdate);
+    } else {
+        return date;
+    }
 }
