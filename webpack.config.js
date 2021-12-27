@@ -7,6 +7,6 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         sourceMapFilename: "sourcemap.js.map"
     },
-    devtool: 'source-map'
+    devtool: 'eval-source-map'
 
 };

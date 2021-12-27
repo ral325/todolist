@@ -6,6 +6,7 @@ export const createTask = (title, description, dueDate, priority) => ({
     dueDate,
     priority,
     completed: false,
+    parentProject: null,
 
     setTitle(title) {
         this.title = title;
@@ -39,6 +40,11 @@ export const createTask = (title, description, dueDate, priority) => ({
         return this.priority;
     },
 
+    getParentProject() {
+        //console.log("this = " + this)
+        return this.parentProject;
+    },
+
     setTaskComplete() {
         this.completed = true;
     }
@@ -66,7 +72,7 @@ export const createProject = (projectName, taskList) => ({
 
     removeTask(task) {
         let taskIndex = this.taskList.indexOf(task);
-        if (taskIndex > 0) {
+        if (taskIndex > -1) {
             this.taskList.splice(taskIndex, 1); //do i need to shift index at all?
         }
     },

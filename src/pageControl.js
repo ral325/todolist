@@ -23,10 +23,17 @@ export function makeHomePage(projectList, indexToDisplay) {
     function controlTabs() {
         //"this" is the tab class element that was clicked
         // projectList comes from input to makeHomePage(), so it won't change within a single call to makeHomePage()
-        let projectNames = projectList.map(project => project.getProjectName());
-        let projectIndex = projectNames.indexOf(this.dataset.projectName);
-        displayProject(projectList[projectIndex]);
+        displayProject(getProjectFromName(this.dataset.projectName, projectList));
     }
+}
+
+//////////////////////////////////////////////////
+/// non-exported functions
+
+function getProjectFromName(projectName, projectList) {
+    let projectNames = projectList.map(project => project.getProjectName());
+    let projectIndex = projectNames.indexOf(projectName);
+    return projectList[projectIndex];
 }
 
 function makeTabs(projectList) {
@@ -50,15 +57,16 @@ function displayProject(project) {
 
     let taskList = project.getTasks();
     for (let i = 0; i < taskList.length; i++) {
-        makeTask(taskList[i], taskContainer);
+        makeTask(taskList[i], taskContainer, project);
     }
 
     return taskContainer;
 }
 
-function makeTask(task, taskContainer) {
+function makeTask(task, taskContainer, project) {
     let newTask = document.createElement("div");
     newTask.classList.add("task");
+    newTask.dataset.projectName = project.getProjectName();
 
     let checkField = document.createElement("div");
     checkField.classList.add("check-box");
@@ -86,6 +94,18 @@ function makeTask(task, taskContainer) {
     newTask.appendChild(descriptionField);
     newTask.appendChild(priorityField);
     newTask.appendChild(dateField);
+
+    // add event listeners to each task
+    checkField.addEventListener("click", (e) => { deleteTask(e.target, task, project) });
+}
+
+function deleteTask(checkFieldElement, task, project) {
+    let taskContainer = document.getElementById("task-container");
+    let thisTask = checkFieldElement.parentElement;
+    taskContainer.removeChild(thisTask);
+
+    //console.log(task)
+    project.removeTask(task);
 }
 
 function makeTaskHeaders(taskContainer) {
